@@ -1,0 +1,196 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2058\deflangfe2058\deftab708{\fonttbl{\f0\fswiss\fprq2\fcharset0 Helvetica;}{\f1\fmodern\fcharset0 Courier-Bold;}{\f2\fmodern\fprq1\fcharset0 Courier;}{\f3\fnil\fcharset2 Symbol;}}
+{\colortbl ;\red128\green0\blue0;\red83\green129\blue53;\red0\green0\blue255;}
+{\*\generator Riched20 10.0.19041}{\*\mmathPr\mdispDef1\mwrapIndent1440 }\viewkind4\uc1 
+\pard\nowidctlpar\qj\b\f0\fs42 -----PASOS PARA LA IMPLEMENTACI\'d3N DEL M\'d3DULO PERIODO VENTA.\par
+\par
+-- 1.- Cargar los archivos:\par
+-- DENTRO DE v2/modulos/compras/PeriodoVenta:\ul\par
+\ulnone\b0 periodoVenta.js\par
+periodoVenta.php\par
+periodoVenta_funciones.php\par
+\par
+\b motor/Catalogos:\par
+\b0 compras.class.php\par
+\b\par
+-- 2.- PROCEDIMIENTOS ALMACENADOS UTILIZADOS REPORTE DE PERIODO VENTA----:\par
+\par
+\b0 sp_compras_actualizaPeriodoVenta\par
+sp_compras_periodoEntreFechas\par
+sp_compras_dameDatosPeriodoVenta\par
+sp_compras_eliminaPeriodoVenta\par
+sp_compras_registraPeriodoVenta\par
+sp_compras_damePeriodosVenta\b\par
+\par
+\par
+-- 3.- TABLAS UTILIZADAS MODULO DE GRUPO-MATERIA:\par
+\par
+
+\pard{\pntext\f3\'B7\tab}{\*\pn\pnlvlblt\pnf3\pnindent0{\pntxtb\'B7}}\nowidctlpar\qj\b0 -periodo_venta\b\par
+{\pntext\f3\'B7\tab}-escuela\par
+{\pntext\f3\'B7\tab}-nivel_estudios\par
+{\pntext\f3\'B7\tab}\par
+
+\pard\nowidctlpar\qj\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+-- 3.- Ejecutar las consultas para cargar los m\'f3dulos:\ul\par
+\ulnone\par
+
+\pard\nowidctlpar\cf1\f1\fs38 INSERT\cf0\b0\f2  \cf1\b\f1 INTO\cf0\b0\f2  `_modulo` (id_modulo,nombre_modulo,id_padre,orden_modulo,archivo_modulo,icono_modulo,plataforma_modulo,urlcontrolador_modulo,estatus_modulo,origen_movimiento,fecha_movimiento,usuario_movimiento) \cf1\b\f1 VALUES\cf0\b0\f2  \par
+
+\pard\nowidctlpar\qj\cf2 ('208', 'Periodo de venta', '200', '1', 'Compras/PeriodoVenta/periodoVenta.php', NULL, 'SIE v2.0', '{{\field{\*\fldinst{HYPERLINK https://controlador.isie.mx/control.php }}{\fldrslt{https://controlador.isie.mx/control.php\ul0\cf0}}}}\f2\fs38 ', 'ACTIVO', NULL, NULL, NULL);\cf0\f0\fs42\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\b Si existen los m\'f3dulos:\par
+\b0\par
+update _modulo set plataforma_modulo = 'SIE v2.0' where id_modulo = 208;\par
+\par
+update _modulo set plataforma_modulo = 'SIE v2.0', archivo_modulo = \lquote Compras/PeriodoVenta/periodoVenta.php\rquote ,\par
+\tab\tab\tab\tab    urlcontrolador_modulo = '{{\field{\*\fldinst{HYPERLINK https://controlador.isie.mx/control.php }}{\fldrslt{https://controlador.isie.mx/control.php\ul0\cf0}}}}\f0\fs42 ',\par
+                   origen_movimiento = origen_de_la_accion,\par
+                   fecha_movimiento = now(),\par
+                   usuario_movimiento = usuario_actual\par
+                   where id_modulo = 208;\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+PROCEDIMIENTOS ALMACENADOS\par
+DELIMITER $$\par
+CREATE DEFINER=`cmartinez`@`%` PROCEDURE `sp_compras_actualizaPeriodoVenta`(IN idPeriodo bigint(20), IN descripcion varchar(100), IN colegio bigint(10), IN nivel smallint(6), IN inicio datetime, IN fin datetime, IN idUsuario bigint(20))\par
+BEGIN\par
+\tab update periodo_venta set \par
+\tab\tab\tab\tab\tab   descripcion_periodoventa = descripcion,\par
+\tab\tab\tab\tab\tab   id_escuela = idColegio,\par
+\tab\tab\tab\tab\tab   id_nivelestudios = idNivel,\par
+\tab\tab\tab\tab\tab   inicio_periodoventa = inicio, \par
+\tab\tab\tab\tab\tab   fin_periodoventa = fin,\par
+\tab\tab\tab\tab\tab   estatus_periodoventa = 'ACTIVO',\par
+\tab\tab\tab\tab\tab   origen_registro = 'SIE' ,\par
+\tab\tab\tab\tab\tab   fecha_registro = NOW() ,\par
+\tab\tab\tab\tab\tab   usuario_registro = idUsuario, \par
+\tab\tab\tab\tab\tab   origen_movimiento = 'SIE', \par
+\tab\tab\tab\tab\tab   fecha_movimiento = NOW() ,\par
+\tab\tab\tab\tab\tab   usuario_movimiento = idUsuario \par
+\tab\tab\tab\tab\tab   where id_periodoventa = idPeriodo;\par
+END$$\par
+DELIMITER ;\par
+\par
+\par
+DELIMITER $$\par
+CREATE DEFINER=`cmartinez`@`%` PROCEDURE `sp_compras_periodoEntreFechas`(IN escuela bigint(20), IN nivel smallint(6), IN inicio datetime, IN fin datetime)\par
+BEGIN\par
+select pv.inicio_periodoventa as inicio, pv.fin_periodoventa as fin,\par
+    pv.id_periodoventa as id\par
+    from periodo_venta pv\par
+\tab inner join escuela e on pv.id_escuela = e.id_escuela\par
+    AND pv.id_escuela = escuela\par
+    inner join nivel_estudios ne on pv.id_nivelestudios = ne.id_nivelestudios\par
+    AND pv.id_nivelestudios = nivel\par
+    where ((inicio between pv.inicio_periodoventa and pv.fin_periodoventa or\par
+    fin between pv.inicio_periodoventa and pv.fin_periodoventa)\par
+    or (fin > pv.fin_periodoventa and inicio < pv.inicio_periodoventa))\par
+    and pv.estatus_periodoventa = 'ACTIVO';\par
+END$$\par
+DELIMITER ;\par
+\par
+\par
+DELIMITER $$\par
+CREATE DEFINER=`cmartinez`@`%` PROCEDURE `sp_compras_registraPeriodoVenta`(IN descripcion varchar(100), IN colegio bigint(10), IN nivel smallint(6), IN inicio datetime, IN fin datetime, IN idUsuario bigint(20))\par
+BEGIN\par
+insert into periodo_venta(descripcion_periodoventa, id_escuela, id_nivelestudios, inicio_periodoventa, fin_periodoventa, estatus_periodoventa, origen_registro,\par
+\tab\tab\tab\tab\tab\tab\tab\tab\tab\tab\tab\tab fecha_registro, usuario_registro, origen_movimiento, fecha_movimiento, usuario_movimiento) \par
+\tab\tab\tab\tab\tab   values(descripcion, \par
+\tab\tab\tab\tab\tab\tab\tab    colegio,\par
+\tab\tab\tab\tab\tab\tab\tab    nivel,\par
+\tab\tab\tab\tab\tab\tab\tab    inicio,\par
+\tab\tab\tab\tab\tab\tab\tab    fin,\par
+\tab\tab\tab\tab\tab\tab\tab    'ACTIVO',\par
+\tab\tab\tab\tab\tab\tab\tab    'SIE',\par
+\tab\tab\tab\tab\tab\tab\tab    NOW(),\par
+\tab\tab\tab\tab\tab\tab\tab    idUsuario,\par
+\tab\tab\tab\tab\tab\tab\tab    'SIE',\par
+\tab\tab\tab\tab\tab\tab\tab    NOW(),\par
+\tab\tab\tab\tab\tab\tab\tab    idUsuario);\par
+END$$\par
+DELIMITER ;\par
+\par
+\par
+DELIMITER $$\par
+CREATE DEFINER=`cmartinez`@`%` PROCEDURE `sp_compras_eliminaPeriodoVenta`(IN idPeriodo bigint(20))\par
+BEGIN\par
+\tab update periodo_venta set estatus_periodoventa = 'INACTIVO' where id_periodoventa = idPeriodo;\par
+END$$\par
+DELIMITER ;\par
+\par
+\par
+DELIMITER $$\par
+CREATE DEFINER=`cmartinez`@`%` PROCEDURE `sp_compras_dameDatosPeriodoVenta`(IN idPeriodo bigint(20))\par
+BEGIN\par
+SELECT  \par
+\tab\tab e.nombre_escuela as escuela, ne.descripcion_nivelestudios as nivel,\par
+\tab\tab pv.descripcion_periodoventa as descripcion, pv.estatus_periodoventa as estatus,\par
+\tab\tab pv.id_escuela as idEscuela, pv.id_nivelestudios as idNivel, pv.inicio_periodoventa as inicio,\par
+\tab\tab pv.fin_periodoventa as fin, pv.fecha_movimiento as fecha, pv.id_periodoventa as id\par
+ FROM periodo_venta pv\par
+ inner join escuela e on pv.id_escuela = e.id_escuela \par
+ inner join nivel_estudios ne on pv.id_nivelestudios = ne.id_nivelestudios \par
+  where id_periodoventa = idPeriodo;\par
+END$$\par
+DELIMITER ;\par
+\par
+\par
+DELIMITER $$\par
+CREATE DEFINER=`cmartinez`@`%` PROCEDURE `sp_compras_actualizaPeriodoVenta`(IN idPeriodo bigint(20), IN descripcion varchar(100), IN colegio bigint(10), IN nivel smallint(6), IN inicio datetime, IN fin datetime, IN idUsuario bigint(20))\par
+BEGIN\par
+\tab update periodo_venta set \par
+\tab\tab\tab\tab\tab   descripcion_periodoventa = descripcion,\par
+\tab\tab\tab\tab\tab   id_escuela = idColegio,\par
+\tab\tab\tab\tab\tab   id_nivelestudios = idNivel,\par
+\tab\tab\tab\tab\tab   inicio_periodoventa = inicio, \par
+\tab\tab\tab\tab\tab   fin_periodoventa = fin,\par
+\tab\tab\tab\tab\tab   estatus_periodoventa = 'ACTIVO',\par
+\tab\tab\tab\tab\tab   origen_registro = 'SIE' ,\par
+\tab\tab\tab\tab\tab   fecha_registro = NOW() ,\par
+\tab\tab\tab\tab\tab   usuario_registro = idUsuario, \par
+\tab\tab\tab\tab\tab   origen_movimiento = 'SIE', \par
+\tab\tab\tab\tab\tab   fecha_movimiento = NOW() ,\par
+\tab\tab\tab\tab\tab   usuario_movimiento = idUsuario \par
+\tab\tab\tab\tab\tab   where id_periodoventa = idPeriodo;\par
+END$$\par
+DELIMITER ;\par
+}
+ 

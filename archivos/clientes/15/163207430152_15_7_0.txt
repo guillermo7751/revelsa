@@ -1,0 +1,6 @@
+H1|A|||||||||I|||||||||||||||||||||||||||||||||||||||||||
+H2|Colegio Conocido|COLC700107A67|601|CALLE 1 X 2 Y 4|563||CENTRO|||Merida|Yucatan|MEX|97000|||||||||||||
+H4|JESUS GABRIEL CHAN NARVAEZ|XAXX010101000|601|||||||YUCATAN|MERIDA|YUCATAN|00000|P01||correoelectronico||||||||||
+IEDU|19588|Primaria|SEPTIEMBRE|INSCRIPCION|2600.0|||0709|01|86121503||PUE|ANDREA REGINA|CXSP130620MYNHHNA4
+S|
+IEDU|<Matrícula>|<Nivel>|<Período>|<Concepto>|<Importe>|||<RVOE>|<FormaPago>|<Clave Producto SAT>|<Referencia>|<Metodo de Pago>|<Nombre>|<Curp>

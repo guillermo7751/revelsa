@@ -1,0 +1,208 @@
+/*
+ * ESTILOS PERSONALIZADOS REVELSA
+ */
+
+.label-dark {
+  max-width:100%;
+  font-weight:700;
+}
+
+/*GLITCH BOOTSTRAP*/
+
+body {
+  padding-right:0 !important;
+}
+
+.modal-open {
+  overflow:auto;
+  padding-right:0 !important;
+}
+
+/*DATATABLES PERSONALIZADO*/
+
+div.bordeada .dataTables_wrapper{
+  margin:5px;
+}
+
+thead tr {
+  background-color: #5499C7;
+  color: white;
+}
+
+table.preciosRenta{
+  background-color: rgba(0,0,0,.05);
+}
+
+.table-fixed tbody {
+    height: 395px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+    display: block;
+}
+
+.table-fixed th {
+  background-color: #5499CC;
+}
+
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+    float: left;
+    position: relative;
+}
+
+.table-fixed thead > tr > th::after {
+  content: '';
+  clear: both;
+  display: block;
+}
+
+.tablaCheckbox{
+  margin-top: 0px !important;
+  width:100%;
+}
+
+.tablaCheckbox thead > tr > th {
+  white-space:nowrap;
+}
+
+.tablaCheckbox tbody > tr > td {
+  white-space:nowrap;
+}
+
+/*CHOSEN*/
+
+.chosen-results{
+  height: 120px;
+}
+
+
+/*MODALES*/
+
+.modalError{
+  background-color: #EA6666;
+  color:white;
+}
+
+.modalAlerta{
+  background-color: #F58750;
+  color:white;
+}
+
+.modalExito{
+  background-color: #5CC460;
+  color:white;
+}
+
+.modal-content{
+  border:0 !important;
+}
+
+/*
+*
+* ==========================================
+* UPLOADER IMAGENES
+* ==========================================
+*
+*/
+.upload {
+    opacity: 0;
+}
+
+.upload-label {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+}
+
+.image-area {
+    border: 2px dashed rgba(150, 150, 150, 0.7);
+    padding: 1rem;
+    position: relative;
+}
+
+.image-area::before {
+    content: 'Resultado de imagen';
+    color: rgba(150, 150, 150, 0.7);
+    font-weight: bold;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    z-index: 1;
+}
+
+.image-no-before::before{
+    display:none;
+}
+
+.image-area img {
+    z-index: 2;
+    position: relative;
+}
+
+/*
+*
+* ==========================================
+* FIX CHECKBOX
+* ==========================================
+*
+*/
+
+.chkInTable{
+  width:16px;
+  height:16px;
+}
+
+.chkForm{
+  width:16px;
+  height:23px;
+}
+
+.pointer {
+cursor: pointer;
+}
+
+button.disabled
+{
+  cursor: not-allowed !important;
+}
+
+/*EDITABLE TABLE*/
+
+.pt-3-half {
+padding-top: 1.4rem;
+}
+
+.moneyInput {
+ padding: 10px;
+ display: block;
+ width: 100%;
+ text-align:center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
